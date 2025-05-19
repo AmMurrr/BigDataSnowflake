@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: big-data-snowfl
+    environment:
+      POSTGRES_DB: big-data-snowfl
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts:/docker-entrypoint-initdb.d
+      - ./source_data:/source_data
+    networks:
+      - custom_net
+volumes:
+  pgdata:
+  
+networks:
+  custom_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
